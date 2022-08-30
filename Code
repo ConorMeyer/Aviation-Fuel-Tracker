@@ -1,0 +1,112 @@
+import tkinter
+import time
+window = tkinter.Tk()
+HEIGHT = 120
+WIDTH = 120
+selectedFuelTank = "Using Center Tank"
+terminate = 0
+def startFuel():
+    fuelBurn = float(fuelBurnInput.get())
+    leftTank = float(leftFuelInput.get())
+    centerTank = float(centerFuelInput.get())
+    rightTank = float(rightFuelInput.get())
+    initialTimeRemaining = (leftTank + centerTank + rightTank) / fuelBurn * 3600
+    i = 0
+    for i in range(int(initialTimeRemaining)):              
+        startTime = time.time()
+        seconds = 1
+        while i < initialTimeRemaining:
+            currentTime = time.time()
+            elapsedTime = currentTime - startTime
+            if elapsedTime > seconds:
+                startTime = time.time()
+                if selectedFuelTank == "Left Tank":
+                    if leftTank > 0:
+                        leftTank = leftTank - (fuelBurn / 3600)
+                if selectedFuelTank == "Center Tank":
+                    if centerTank > 0:
+                        centerTank = centerTank - (fuelBurn / 3600)
+                if selectedFuelTank == "Right Tank":
+                    if rightTank > 0:
+                        rightTank = rightTank - (fuelBurn / 3600)
+                leftFuelRemaining.configure(text = str(round(leftTank,2)) + " Gallons")
+                centerFuelRemaining.configure(text = str(round(centerTank,2)) + " Gallons")
+                rightFuelRemaining.configure(text = str(round(rightTank,2)) + " Gallons")
+                totalFuelRemaining.configure(text = str(round(leftTank + centerTank + rightTank, 2)) + " Gallons")
+                leftTimeRemaining.configure(text = str(round(leftTank / fuelBurn * 60,2)) + " Minutes")
+                centerTimeRemaining.configure(text = str(round(centerTank / fuelBurn * 60, 2)) + " Minutes")
+                rightTimeRemaining.configure(text = str(round(rightTank / fuelBurn * 60,2)) + " Minutes")
+                totalTimeRemaining.configure(text = str(round((leftTank + centerTank + rightTank) / fuelBurn * 60, 2)) + " Minutes")
+                window.update()
+def left():
+    global selectedFuelTank
+    selectedFuelTank = "Left Tank"
+    currentFuelTank.configure(text = "Using " + selectedFuelTank)
+    window.update()
+def center():
+    global selectedFuelTank
+    selectedFuelTank = "Center Tank"
+    currentFuelTank.configure(text = "Using " + selectedFuelTank)
+    window.update()
+def right():
+    global selectedFuelTank
+    selectedFuelTank = "Right Tank"
+    currentFuelTank.configure(text = "Using " + selectedFuelTank)
+    window.update()
+def reset():
+    exit()
+Label1 = tkinter.Label(window, text = "Fuel Burn per Hour", width = 20)
+Label1.grid(column = 0, row = 0)
+Label2 = tkinter.Label(window, text = "Left Tank Usuable Fuel", width = 20)
+Label2.grid(column = 0, row = 1)
+Label3 = tkinter.Label(window, text = "Center Tank Usuable Fuel", width = 20)
+Label3.grid(column = 0, row = 2)
+Label4 = tkinter.Label(window, text = "Right Tank Usuable Fuel", width = 20)
+Label4.grid(column = 0, row = 3)
+label5 = tkinter.Label(window, text = "Fuel Quantity in Gallons", width = 20)
+label5.grid(column = 61, row = 0)
+label6 = tkinter.Label(window, text = "Fuel Quantity in Minutes", width = 20)
+label6.grid(column = 81, row = 0)
+label7 = tkinter.Label(window, text = "Total Remaining: ", width = 20)
+label7.grid(column = 41, row = 4)
+startTimerButton = tkinter.Button(window, text = "Start Timer", command = startFuel, width = 20)
+startTimerButton.grid(column = 0, row = 4)
+endProgramButton = tkinter.Button(window, text = "End Program", command = reset, width = 20)
+endProgramButton.grid(column = 21, row = 4)
+fuelBurnInput = tkinter.Entry(window, width = 20)
+fuelBurnInput.grid(column = 21, row = 0)
+leftFuelInput = tkinter.Entry(window, width = 20)
+leftFuelInput.grid(column = 21, row = 1)
+centerFuelInput = tkinter.Entry(window, width = 20)
+centerFuelInput.grid(column = 21, row = 2)
+rightFuelInput = tkinter.Entry(window, width = 20)
+rightFuelInput.grid(column = 21, row = 3)
+currentFuelTank = tkinter.Label(window, text = "Using Center Tank", width = 20)
+currentFuelTank.grid(column = 41, row = 0)
+leftFuelRemaining = tkinter.Label(window, text = "0", width = 20)
+leftFuelRemaining.grid(column = 61, row = 1)
+centerFuelRemaining = tkinter.Label(window, text = "0", width = 20)
+centerFuelRemaining.grid(column = 61, row = 2)
+rightFuelRemaining = tkinter.Label(window, text = "0", width = 20)
+rightFuelRemaining.grid(column = 61, row = 3)
+totalFuelRemaining = tkinter.Label(window, text = "0", width = 20)
+totalFuelRemaining.grid(column = 61, row = 4)
+leftTimeRemaining = tkinter.Label(window, text = "0", width = 20)
+leftTimeRemaining.grid(column = 81, row = 1)
+centerTimeRemaining = tkinter.Label(window, text = "0", width = 20)
+centerTimeRemaining.grid(column = 81, row = 2)
+rightTimeRemaining = tkinter.Label(window, text = "0", width = 20)
+rightTimeRemaining.grid(column = 81, row = 3)
+totalTimeRemaining = tkinter.Label(window, text = "0", width = 20)
+totalTimeRemaining.grid(column = 81, row = 4)
+leftTankButton = tkinter.Button(window, text = "Switch to Left Tank", command = left, width = 20)
+leftTankButton.grid(column = 41, row = 1)
+centerTankButton = tkinter.Button(window, text = "Switch to Center Tank", command = center, width = 20)
+centerTankButton.grid(column = 41, row = 2)
+rightTankButton = tkinter.Button(window, text = "Switch to Right Tank", command = right, width = 20)
+rightTankButton.grid(column = 41, row = 3)
+window.mainloop()
+
+
+    
+    
